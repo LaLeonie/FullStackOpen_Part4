@@ -50,7 +50,7 @@ blogPostsRouter.delete("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-personsRouter.get("/:id", (req, res, next) => {
+blogPostsRouter.get("/:id", (req, res, next) => {
   BlogPost.findById(req.params.id)
     .then((post) => {
       if (post) {
@@ -63,6 +63,5 @@ personsRouter.get("/:id", (req, res, next) => {
       next(error);
     });
 });
-r;
 
 module.exports = blogPostsRouter;
