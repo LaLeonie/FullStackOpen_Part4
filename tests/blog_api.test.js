@@ -52,6 +52,24 @@ test("post request to the /api/blogs url successfully creates a new blog post", 
   expect(titles).toContain("How to tame a werefolf");
 });
 
+test("if likes missing from request, it will default to 0", async () => {
+  const newPost = {
+    title: "How to tame a werefolf",
+    author: "Hagrid",
+    url: "lililililililili",
+  };
+
+  await api
+    .post("/blogPosts")
+    .send(newPost)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const postsAtTheEnd = await postsInDb();
+  const lastPost = postsAtTheEnd[postsAtTheEnd.length - 1];
+  expect(lastPost.likes).toBe(0);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
