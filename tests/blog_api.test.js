@@ -28,7 +28,6 @@ test("api retunrs correct amount of blog posts", async () => {
 
 test("unique identifier property of blog posts is named id", async () => {
   const response = await api.get("/blogPosts");
-  console.log(response.body[0]);
   expect(response.body[0].id).toBeDefined();
 });
 
@@ -68,6 +67,14 @@ test("if likes missing from request, it will default to 0", async () => {
   const postsAtTheEnd = await postsInDb();
   const lastPost = postsAtTheEnd[postsAtTheEnd.length - 1];
   expect(lastPost.likes).toBe(0);
+});
+
+test("backend responds with 400 if title and url are missing", async () => {
+  const newPost = {
+    author: "Hagrid",
+  };
+
+  await api.post("/blogPosts").send(newPost).expect(400);
 });
 
 afterAll(() => {
