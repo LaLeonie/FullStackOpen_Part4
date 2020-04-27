@@ -77,6 +77,22 @@ test("backend responds with 400 if title and url are missing", async () => {
   await api.post("/blogPosts").send(newPost).expect(400);
 });
 
+describe("deletion of a blog post", () => {
+  test("succeeds with status code 204 if valid id", async () => {
+    const postsAtStart = await postsInDb();
+    const postToDelete = postsAtStart[0];
+
+    await api.delete(`/blogPosts/${postToDelete.id}`).expect(204);
+
+    const postsAtEnd = await postsInDb();
+
+    expect(postsAtEnd).toHaveLength(postsAtStart.length - 1);
+
+    const authors = postsAtEnd.map((p) => p.author);
+    expect(authors).not.toContain(postToDelete.author);
+  });
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
