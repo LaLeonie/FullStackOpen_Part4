@@ -9,6 +9,9 @@ usersRouter.get("/", async (req, res) => {
 
 usersRouter.post("/", async (req, res) => {
   const body = req.body;
+  if (body.passwordHash.split().length < 3) {
+    return res.status(400).json({ error: "password not long enough" });
+  }
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(body.passwordHash, saltRounds);
 
@@ -19,7 +22,7 @@ usersRouter.post("/", async (req, res) => {
   });
 
   const savedUser = await user.save();
-  res.json(savedUser);
+  res.json(await savedUser.toJSON());
 });
 
 module.exports = usersRouter;
