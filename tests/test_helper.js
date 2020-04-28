@@ -1,5 +1,6 @@
 const BlogPost = require("../models/blogpost");
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 const initialBlog = [
   {
@@ -22,9 +23,9 @@ const initialBlog = [
 ];
 
 const initialUsers = [
-  { usernam: "Ronny", user: "Ron", passwordHash: "Weasley" },
-  { usernam: "The One", user: "Harry", passwordHash: "Potter" },
-  { usernam: "Hermy", user: "Hermione", passwordHash: "Granger" },
+  { username: "Ronny", user: "Ron", passwordHash: "Weasley" },
+  { username: "The One", user: "Harry", passwordHash: "Potter" },
+  { username: "Hermy", user: "Hermione", passwordHash: "Granger" },
 ];
 
 const postsInDb = async () => {

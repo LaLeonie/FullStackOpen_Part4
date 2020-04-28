@@ -51,6 +51,16 @@ blogPostsRouter.put("/:id", async (req, res, next) => {
 });
 
 blogPostsRouter.delete("/:id", async (req, res, next) => {
+  const decodedToken = jwt.verify(req.token, process.env.SECRET);
+
+  const post = await BlogPost.findById(req.params.id);
+
+  if (post.user._id.toString() !== decodedToken.id.toString()) {
+    return res
+      .status(401)
+      .json({ error: "you cannot delete posts from other users" });
+  }
+
   await BlogPost.findByIdAndDelete(req.params.id);
   res.status(204).end();
 });
