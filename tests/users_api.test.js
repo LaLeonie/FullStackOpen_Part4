@@ -27,7 +27,6 @@ describe("tests with initially one user", () => {
 
   test("creation succeeds with a new username", async () => {
     const usersAtStart = await usersInDb();
-    console.log(usersAtStart);
     const user = {
       username: "Leonie",
       name: "LalaLand",
@@ -52,7 +51,11 @@ describe("tests with initially one user", () => {
     const passwordHash = await bcrypt.hash("secret", 10);
     const user = new User({ username: "root", passwordHash });
 
-    api.post("/users").send(user).expect(400);
+    api
+      .post("/users")
+      .send(user)
+      .expect(400)
+      .expect(/to be unique/);
 
     const usersAtEnd = await usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length);
