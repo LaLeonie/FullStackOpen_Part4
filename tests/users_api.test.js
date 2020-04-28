@@ -11,7 +11,7 @@ describe("tests with initially one user", () => {
   beforeEach(async () => {
     await User.deleteMany({});
     const passwordHash = await bcrypt.hash("secret", 10);
-    const user = new User({ username: "root", passwordHash });
+    const user = new User({ username: "root", name: "first", passwordHash });
 
     await user.save();
   });
