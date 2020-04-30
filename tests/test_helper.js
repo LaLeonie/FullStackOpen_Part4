@@ -1,6 +1,5 @@
 const BlogPost = require("../models/blogpost");
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
 
 const initialBlog = [
   {
@@ -22,11 +21,7 @@ const initialBlog = [
   },
 ];
 
-const initialUsers = [
-  { username: "Ronny", user: "Ron", passwordHash: "Weasley" },
-  { username: "The One", user: "Harry", passwordHash: "Potter" },
-  { username: "Hermy", user: "Hermione", passwordHash: "Granger" },
-];
+
 
 const postsInDb = async () => {
   const posts = await BlogPost.find({});
@@ -40,7 +35,6 @@ const usersInDb = async () => {
 
 module.exports = {
   initialBlog,
-  initialUsers,
   postsInDb,
   usersInDb,
 };
